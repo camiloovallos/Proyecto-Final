@@ -9,8 +9,8 @@ class Program
         int totalUsuarios = 0;
 
         string[] clases = { "Yoga", "Spinning", "Zumba", "Crossfit" };
-        int[] cupos = { 0, 0, 0, 0 }; 
-        int[,] reservas = new int[15, 2]; 
+        int[] cupos = { 0, 0, 0, 0 };
+        int[,] reservas = new int[15, 2];
 
         for (int i = 0; i < 15; i++)
         {
@@ -68,22 +68,95 @@ class Program
                             Console.WriteLine($"{i + 1}. {usuarios[i]}");
                         }
                         Console.Write("Elige un usuario (1-" + totalUsuarios + "): ");
-                        int usuarioElegido;
-                        if (int.TryParse(Console.ReadLine(), out usuarioElegido) && usuarioElegido >= 1 && usuarioElegido <= totalUsuarios)
+                        int opcionUsuario;
+                        if (int.TryParse(Console.ReadLine(), out opcionUsuario) && opcionUsuario >= 1 && opcionUsuario <= totalUsuarios)
                         {
+                            int indiceUsuario = opcionUsuario - 1;
+
                             Console.WriteLine("Clases:");
-                            for (int c = 0; c < 4; c++)
+                            for (int i = 0; i < 4; i++)
                             {
-                                Console.WriteLine($"{c + 1}. {clases[c]}");
+                                Console.WriteLine($"{i + 1}. {clases[i]} ({cupos[i]}/10)");
                             }
-                            Console.WriteLine("Funcion en desarrollo. Presiona Enter.");
+                            Console.Write("Elige una clase (1-4): ");
+                            int opcionClase;
+                            if (int.TryParse(Console.ReadLine(), out opcionClase) && opcionClase >= 1 && opcionClase <= 4)
+                            {
+                                int indiceClase = opcionClase - 1;
+
+                                if (cupos[indiceClase] < 10)
+                                {
+                                    for (int r = 0; r < 2; r++)
+                                    {
+                                        if (reservas[indiceUsuario, r] == -1)
+                                        {
+                                            reservas[indiceUsuario, r] = indiceClase;
+                                            cupos[indiceClase]++;
+                                            Console.WriteLine("Reserva realizada.");
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Clase llena.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Opcion de clase no valida.");
+                            }
+                            Console.ReadKey();
                         }
                         else
                         {
-                            Console.WriteLine("Opcion no valida.");
+                            Console.WriteLine("Opcion de usuario no valida.");
+                            Console.ReadKey();
                         }
-                        Console.ReadKey();
                     }
+                }
+                else if (opcion == 3)
+                {
+                    Console.WriteLine("=== Reporte de Reservas ===");
+
+                    for (int i = 0; i < totalUsuarios; i++)
+                    {
+                        Console.Write($"{usuarios[i]}: ");
+                        bool tieneReserva = false;
+                        for (int r = 0; r < 2; r++)
+                        {
+                            if (reservas[i, r] != -1)
+                            {
+                                Console.Write($"{clases[reservas[i, r]]} ");
+                                tieneReserva = true;
+                            }
+                        }
+                        if (!tieneReserva)
+                        {
+                            Console.Write("Sin reservas");
+                        }
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine("\nCupos por clase:");
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Console.WriteLine($"{clases[i]}: {cupos[i]}/10");
+                    }
+
+                    int maxPersonas = cupos[0];
+                    int indiceMasPopular = 0;
+                    for (int i = 1; i < 4; i++)
+                    {
+                        if (cupos[i] > maxPersonas)
+                        {
+                            maxPersonas = cupos[i];
+                            indiceMasPopular = i;
+                        }
+                    }
+                    Console.WriteLine($"\nClase mas popular: {clases[indiceMasPopular]} ({maxPersonas} personas)");
+
+                    Console.ReadKey();
                 }
                 else if (opcion == 4)
                 {
