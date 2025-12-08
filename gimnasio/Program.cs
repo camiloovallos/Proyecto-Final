@@ -53,6 +53,38 @@ class Program
                     }
                     Console.ReadKey();
                 }
+                else if (opcion == 2)
+                {
+                    if (totalUsuarios == 0)
+                    {
+                        Console.WriteLine("No hay usuarios registrados.");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Usuarios:");
+                        for (int i = 0; i < totalUsuarios; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {usuarios[i]}");
+                        }
+                        Console.Write("Elige un usuario (1-" + totalUsuarios + "): ");
+                        int usuarioElegido;
+                        if (int.TryParse(Console.ReadLine(), out usuarioElegido) && usuarioElegido >= 1 && usuarioElegido <= totalUsuarios)
+                        {
+                            Console.WriteLine("Clases:");
+                            for (int c = 0; c < 4; c++)
+                            {
+                                Console.WriteLine($"{c + 1}. {clases[c]}");
+                            }
+                            Console.WriteLine("Funcion en desarrollo. Presiona Enter.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Opcion no valida.");
+                        }
+                        Console.ReadKey();
+                    }
+                }
                 else if (opcion == 4)
                 {
                     Console.WriteLine("Saliendo del sistema...");
