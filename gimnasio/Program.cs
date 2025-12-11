@@ -1,15 +1,21 @@
 ﻿using System;
 
+using System;
+
 class Program
 {
     static void Main()
     {
         int opcion = 0;
+
         string[] usuarios = new string[15];
+
         int totalUsuarios = 0;
 
         string[] clases = { "Yoga", "Spinning", "Zumba", "Crossfit" };
+
         int[] cupos = { 0, 0, 0, 0 };
+        
         int[,] reservas = new int[15, 2];
 
         for (int i = 0; i < 15; i++)
@@ -21,7 +27,8 @@ class Program
         while (opcion != 4)
         {
             Console.Clear();
-            Console.WriteLine("=== Gimnasio - Sistema de Reservas ===");
+            MostrarTitulo(); 
+
             Console.WriteLine("1. Registrar usuarios");
             Console.WriteLine("2. Hacer reservas");
             Console.WriteLine("3. Ver reporte");
@@ -174,5 +181,15 @@ class Program
                 Console.ReadKey();
             }
         }
+    }
+
+    static void MostrarTitulo()
+    {
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("┌────────────────────────────────┐");
+        Console.WriteLine("│ GIMNASIO - SISTEMA DE RESERVAS │");
+        Console.WriteLine("└────────────────────────────────┘");
+        Console.ResetColor();
+        Console.WriteLine();
     }
 }
